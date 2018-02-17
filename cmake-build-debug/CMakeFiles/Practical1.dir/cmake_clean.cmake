@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Practical1.dir/main.cpp.o"
+  "CMakeFiles/Practical1.dir/GeneticAlgorithm.cpp.o"
   "Practical1.pdb"
   "Practical1.exe"
   "libPractical1.dll.a"

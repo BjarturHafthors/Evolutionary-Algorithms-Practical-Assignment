@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/cygdrive/d/Documents/School/EA/Practical1/GeneticAlgorithm.cpp">
+			<Option target="Practical1"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Documents/School/EA/Practical1/GeneticAlgorithm.h">
+			<Option target="Practical1"/>
+		</Unit>
 		<Unit filename="/cygdrive/d/Documents/School/EA/Practical1/main.cpp">
 			<Option target="Practical1"/>
 		</Unit>
