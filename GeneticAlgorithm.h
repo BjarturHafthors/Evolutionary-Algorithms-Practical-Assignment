@@ -5,16 +5,28 @@
 #ifndef PRACTICAL1_GENETICALGORITHM_H
 #define PRACTICAL1_GENETICALGORITHM_H
 
+#include <random>
 
 class GeneticAlgorithm {
 private:
+    // FUNCTIONS
+    void initializePopulation();
+    void deletePopulation();
+
+    // VARIABLES
+    bool** population;
+    const int STRING_LENGTH = 100;
+    int populationSize;
+    double averagePopulationFitness;
+    std::random_device random;
+    std::mt19937 mt;
 
 public:
     // FUNCTIONS
 
     // Performs a single run of the algorithm with specified
     // crossover operator, fitness function and population size
-    void run(int co, int ff, int population);
+    bool* run(int co, int ff, int population);
 
     // VARIABLES
 
@@ -27,8 +39,6 @@ public:
         tightlyNonDeceptiveTrap,
         randomlyDeceptiveTrap,
         randomlyNonDeceptiveTrap};
-
-
 };
 
 
