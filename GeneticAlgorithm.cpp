@@ -13,22 +13,33 @@ bool* GeneticAlgorithm::run(int co, int ff, int pSize)
     // Initializing random generator
     mt = std::mt19937(random());
 
-    averagePopulationFitness = -1;
-    double lastAveragePopulationFitness = -2;
+    bool aChildWasAddedToThePopulation = true;
 
-    // Repeat until average fitness of population doesn't change anymore
-    // TODO: Ask if the teacher recommends a better stopping criterion
-    while (averagePopulationFitness >= lastAveragePopulationFitness)
+    // Repeat until children are not used any more
+    while (aChildWasAddedToThePopulation)
     {
         // TODO: Randomly shuffle population for every round except first
+        shufflePopulation();
 
         // TODO: Generate 2 offspring per parent pair using crossover
+        switch (co)
+        {
+            case uniformX:
+                // TODO: Call uniformX function
+                break;
+            case twoPointX:
+                // TODO: Call uniformX function
+                break;
+            default:
+                // This should never happen!
+                break;
+        }
 
         // TODO: Pick best 2 solutions of each family of 4
+        selectIndividualsForNextGeneration();
 
+        // TODO: Update condition (aChildWasAdded)
 
-        // TODO: Update averagePopulationFitness
-        lastAveragePopulationFitness = averagePopulationFitness;
     }
 
     // Freeing population memory
@@ -49,8 +60,16 @@ void GeneticAlgorithm::initializePopulation()
         population[i] = new bool[STRING_LENGTH];
         for (int j = 0; j < STRING_LENGTH; j++)
         {
+            // Giving each individual random initial values
             population[i][j] = (bool) distribution(mt);
         }
+    }
+
+    // Allocate memory for children
+    children = new bool*[populationSize];
+    for (int i = 0; i < populationSize; i++)
+    {
+        children[i] = new bool[STRING_LENGTH];
     }
 }
 
@@ -63,4 +82,56 @@ void GeneticAlgorithm::deletePopulation()
     }
 
     delete[] population;
+
+    // Deallocate memory for population
+    for (int i = 0; i < populationSize; i++)
+    {
+        delete [] children[i];
+    }
+
+    delete[] children;
+}
+
+void shufflePopulation()
+{
+
+}
+
+void uniformCrossover()
+{
+
+}
+
+void twoPointCrossover()
+{
+
+
+}
+
+void selectIndividualsForNextGeneration()
+{
+
+}
+
+void countingOnesFitnessCalculation()
+{
+
+}
+void tightlyDeceptiveTrapFitnessCalculation()
+{
+
+}
+void tightlyNonDeceptiveTrapFitnessCalculation()
+{
+
+}
+
+void randomlyDeceptiveTrapFitnessCalculation()
+{
+
+}
+
+void randomlyNonDeceptiveTrapFitnessCalculation()
+{
+
 }

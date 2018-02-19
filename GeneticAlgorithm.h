@@ -10,14 +10,26 @@
 class GeneticAlgorithm {
 private:
     // FUNCTIONS
+
     void initializePopulation();
     void deletePopulation();
+    void shufflePopulation();
+    void uniformCrossover();
+    void twoPointCrossover();
+    void selectIndividualsForNextGeneration();
+    void countingOnesFitnessCalculation();
+    void tightlyDeceptiveTrapFitnessCalculation();
+    void tightlyNonDeceptiveTrapFitnessCalculation();
+    void randomlyDeceptiveTrapFitnessCalculation();
+    void randomlyNonDeceptiveTrapFitnessCalculation();
+
+
 
     // VARIABLES
     bool** population;
+    bool** children;
     const int STRING_LENGTH = 100;
     int populationSize;
-    double averagePopulationFitness;
     std::random_device random;
     std::mt19937 mt;
 
