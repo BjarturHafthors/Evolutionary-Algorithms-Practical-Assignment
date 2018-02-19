@@ -1,3 +1,0 @@
-/cygdrive/d/Documenten/Studie/INFOMEC/Practical1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/cygdrive/d/Documenten/Studie/INFOMEC/Practical1/cmake-build-debug/CMakeFiles/edit_cache.dir
-/cygdrive/d/Documenten/Studie/INFOMEC/Practical1/cmake-build-debug/CMakeFiles/Practical1.dir

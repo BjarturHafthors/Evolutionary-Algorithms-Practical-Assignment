@@ -1,1 +1,0 @@
-/usr/bin/c++.exe -g  -Wl,--enable-auto-import CMakeFiles/Practical1.dir/main.cpp.o CMakeFiles/Practical1.dir/GeneticAlgorithm.cpp.o  -o Practical1.exe -Wl,--out-implib,libPractical1.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
