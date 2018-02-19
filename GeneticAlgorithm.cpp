@@ -16,17 +16,30 @@ bool* GeneticAlgorithm::run(int co, int ff, int pSize)
     bool aChildWasAddedToThePopulation = true;
 
     // Repeat until children are not used any more
-    // TODO: Ask if the teacher recommends a better stopping criterion
     while (aChildWasAddedToThePopulation)
     {
         // TODO: Randomly shuffle population for every round except first
+        shufflePopulation();
 
         // TODO: Generate 2 offspring per parent pair using crossover
+        switch (co)
+        {
+            case uniformX:
+                // TODO: Call uniformX function
+                break;
+            case twoPointX:
+                // TODO: Call uniformX function
+                break;
+            default:
+                // This should never happen!
+                break;
+        }
 
         // TODO: Pick best 2 solutions of each family of 4
-
+        selectIndividualsForNextGeneration();
 
         // TODO: Update condition (aChildWasAdded)
+
     }
 
     // Freeing population memory
@@ -51,6 +64,13 @@ void GeneticAlgorithm::initializePopulation()
             population[i][j] = (bool) distribution(mt);
         }
     }
+
+    // Allocate memory for children
+    children = new bool*[populationSize];
+    for (int i = 0; i < populationSize; i++)
+    {
+        children[i] = new bool[STRING_LENGTH];
+    }
 }
 
 void GeneticAlgorithm::deletePopulation()
@@ -62,4 +82,56 @@ void GeneticAlgorithm::deletePopulation()
     }
 
     delete[] population;
+
+    // Deallocate memory for population
+    for (int i = 0; i < populationSize; i++)
+    {
+        delete [] children[i];
+    }
+
+    delete[] children;
+}
+
+void shufflePopulation()
+{
+
+}
+
+void uniformCrossover()
+{
+
+}
+
+void twoPointCrossover()
+{
+
+
+}
+
+void selectIndividualsForNextGeneration()
+{
+
+}
+
+void countingOnesFitnessCalculation()
+{
+
+}
+void tightlyDeceptiveTrapFitnessCalculation()
+{
+
+}
+void tightlyNonDeceptiveTrapFitnessCalculation()
+{
+
+}
+
+void randomlyDeceptiveTrapFitnessCalculation()
+{
+
+}
+
+void randomlyNonDeceptiveTrapFitnessCalculation()
+{
+
 }
