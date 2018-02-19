@@ -13,12 +13,11 @@ bool* GeneticAlgorithm::run(int co, int ff, int pSize)
     // Initializing random generator
     mt = std::mt19937(random());
 
-    averagePopulationFitness = -1;
-    double lastAveragePopulationFitness = -2;
+    bool aChildWasAddedToThePopulation = true;
 
-    // Repeat until average fitness of population doesn't change anymore
+    // Repeat until children are not used any more
     // TODO: Ask if the teacher recommends a better stopping criterion
-    while (averagePopulationFitness >= lastAveragePopulationFitness)
+    while (aChildWasAddedToThePopulation)
     {
         // TODO: Randomly shuffle population for every round except first
 
@@ -27,8 +26,7 @@ bool* GeneticAlgorithm::run(int co, int ff, int pSize)
         // TODO: Pick best 2 solutions of each family of 4
 
 
-        // TODO: Update averagePopulationFitness
-        lastAveragePopulationFitness = averagePopulationFitness;
+        // TODO: Update condition (aChildWasAdded)
     }
 
     // Freeing population memory
@@ -49,6 +47,7 @@ void GeneticAlgorithm::initializePopulation()
         population[i] = new bool[STRING_LENGTH];
         for (int j = 0; j < STRING_LENGTH; j++)
         {
+            // Giving each individual random initial values
             population[i][j] = (bool) distribution(mt);
         }
     }

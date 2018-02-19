@@ -17,7 +17,6 @@ private:
     bool** population;
     const int STRING_LENGTH = 100;
     int populationSize;
-    double averagePopulationFitness;
     std::random_device random;
     std::mt19937 mt;
 
