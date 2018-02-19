@@ -15,7 +15,12 @@ int main() {
        TODO: until 24/25 runs return optimal solution*/
 
     // Experiment 1
-    bool* bestSolutionFound = ga.run(crossoverOperator, fitnessFunction, populationSize);
+        // Rep 25 times
+            bool* bestSolutionFound = ga.run(crossoverOperator, fitnessFunction, populationSize);
+            // Write fitness value
+            // Add to amountOfSuccesses
+        // If failure --> double popsize and try again.
+        // If success --> decrease popsize and try again
 
     // TODO: Experiments 2 - 5
 
