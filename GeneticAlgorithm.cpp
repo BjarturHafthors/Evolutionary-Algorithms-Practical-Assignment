@@ -4,7 +4,20 @@
 
 #include "GeneticAlgorithm.h"
 
-std::vector<bool> GeneticAlgorithm::run(crossoverOperator co, fitnessFunction ff, int pSize)
+GeneticAlgorithm::GeneticAlgorithm()
+{
+
+}
+
+GeneticAlgorithm::GeneticAlgorithm(GeneticAlgorithm &ga)
+{
+    this->population = ga.population;
+    this->children = ga.children;
+    this->populationSize = ga.populationSize;
+    this->mt = ga.mt;;
+}
+
+std::vector<bool> GeneticAlgorithm::run(CrossoverOperator co, FitnessFunction ff, int pSize)
 {
     fitnessFunc = ff;
 
@@ -27,10 +40,10 @@ std::vector<bool> GeneticAlgorithm::run(crossoverOperator co, fitnessFunction ff
         // Pick appropriate crossover function
         switch (co)
         {
-            case uniformX:
+            case CrossoverOperator::uniformX:
                 performUniformCrossover();
                 break;
-            case twoPointX:
+            case CrossoverOperator::twoPointX:
                 performTwoPointCrossover();
                 break;
         }
@@ -100,19 +113,19 @@ void GeneticAlgorithm::setIndividualFitness(Individual* individual)
     // Pick correct fitness function
     switch(fitnessFunc)
     {
-        case countingOnes:
+        case FitnessFunction::countingOnes:
             fitness = countingOnesFitnessCalculation(individual);
             break;
-        case tightlyDeceptiveTrap:
+        case FitnessFunction::tightlyDeceptiveTrap:
             fitness = tightlyDeceptiveTrapFitnessCalculation(individual);
             break;
-        case tightlyNonDeceptiveTrap:
+        case FitnessFunction::tightlyNonDeceptiveTrap:
             fitness = tightlyNonDeceptiveTrapFitnessCalculation(individual);
             break;
-        case randomlyDeceptiveTrap:
+        case FitnessFunction::randomlyDeceptiveTrap:
             fitness = randomlyDeceptiveTrapFitnessCalculation(individual);
             break;
-        case randomlyNonDeceptiveTrap:
+        case FitnessFunction::randomlyNonDeceptiveTrap:
             fitness = randomlyNonDeceptiveTrapFitnessCalculation(individual);
             break;
     }
@@ -136,7 +149,7 @@ void GeneticAlgorithm::selectIndividualsForNextGeneration()
         std::sort(family.begin(), family.end());
 
         // If either is child (if this does not apply we won't update anything)
-        if (!family[0].isCurrentlyInPopulation() || !family[1].isCurrentlyInPopulation)
+        if (!family[0].isCurrentlyInPopulation() || !family[1].isCurrentlyInPopulation())
         {
             // First is already in population
             if (family[0].isCurrentlyInPopulation() && !family[1].isCurrentlyInPopulation())
@@ -246,9 +259,9 @@ void GeneticAlgorithm::performTwoPointCrossover()
     // TODO: Implement..
 }
 
-int GeneticAlgorithm::countingOnesFitnessCalculation(Individual individual)
+int GeneticAlgorithm::countingOnesFitnessCalculation(Individual* individual)
 {
-    std::vector<bool> values = individual.getValues();
+    std::vector<bool> values = individual->getValues();
 
     int fitness = 0;
 
@@ -263,24 +276,24 @@ int GeneticAlgorithm::countingOnesFitnessCalculation(Individual individual)
     return fitness;
 }
 
-int GeneticAlgorithm::tightlyDeceptiveTrapFitnessCalculation(Individual individual)
+int GeneticAlgorithm::tightlyDeceptiveTrapFitnessCalculation(Individual* individual)
 {
     // TODO: Implement..
     return 0;
 }
-int GeneticAlgorithm::tightlyNonDeceptiveTrapFitnessCalculation(Individual individual)
-{
-    // TODO: Implement..
-    return 0;
-}
-
-int GeneticAlgorithm::randomlyDeceptiveTrapFitnessCalculation(Individual individual)
+int GeneticAlgorithm::tightlyNonDeceptiveTrapFitnessCalculation(Individual* individual)
 {
     // TODO: Implement..
     return 0;
 }
 
-int GeneticAlgorithm::randomlyNonDeceptiveTrapFitnessCalculation(Individual individual)
+int GeneticAlgorithm::randomlyDeceptiveTrapFitnessCalculation(Individual* individual)
+{
+    // TODO: Implement..
+    return 0;
+}
+
+int GeneticAlgorithm::randomlyNonDeceptiveTrapFitnessCalculation(Individual* individual)
 {
     // TODO: Implement..
     return 0;

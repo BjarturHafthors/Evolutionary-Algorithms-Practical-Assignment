@@ -13,8 +13,9 @@ class Individual
 {
 public:
     const int STRING_LENGTH = 100;
-
     Individual(bool currentlyInPopulation);
+    Individual(const Individual &individual);
+    Individual();
     void initializeValues();
     bool isCurrentlyInPopulation() const;
     void setCurrentlyInPopulation(bool currentlyInPopulation);
@@ -22,6 +23,7 @@ public:
     void setFitness(int fitness);
     const std::vector<bool> &getValues() const;
     void setValues(const std::vector<bool> &values);
+    Individual& operator=(const Individual& other);
 
 private:
     std::vector<bool> values;

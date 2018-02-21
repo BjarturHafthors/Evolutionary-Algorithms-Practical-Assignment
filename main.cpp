@@ -2,7 +2,7 @@
 #include <iostream>
 
 void printResults(int fness, int iter, int cx, int ff, int ps);
-bool doTraining(GeneticAlgorithm ga, int cx, int ff, int ps, int is, int ms, int mf);
+bool doTraining(GeneticAlgorithm ga, CrossoverOperator cx, FitnessFunction ff, int ps, int is, int ms, int mf);
 
 int main() {
     const int INITIAL_POPULATION_SIZE = 10;
@@ -13,8 +13,8 @@ int main() {
     // Create instance of GA
     GeneticAlgorithm ga;
 
-    int crossoverOperator = ga.uniformX;
-    int fitnessFunction = ga.countingOnes;
+    CrossoverOperator crossoverOperator = CrossoverOperator::uniformX;
+    FitnessFunction fitnessFunction = FitnessFunction::countingOnes;
     int populationSize = INITIAL_POPULATION_SIZE;
     int maxFitness = 100;
 
@@ -40,11 +40,11 @@ int main() {
     return 0;
 }
 
-bool doTraining(GeneticAlgorithm ga, int cx, int ff, int ps, int is, int ms, int mf){
+bool doTraining(GeneticAlgorithm ga, CrossoverOperator cx, FitnessFunction ff, int ps, int is, int ms, int mf){
     int count = 0;
     // Rep 25 times
     for(int n = 0; n < is; n++){
-        bool* bestSolutionFound = ga.run(cx, ff, ps);
+        std::vector<bool> bestSolutionFound = ga.run(cx, ff, ps);
         //Compute fitness value for bestSolution
         int fitness = 404;
 

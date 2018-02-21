@@ -7,27 +7,20 @@
 
 #include <algorithm>
 #include "Individual.h"
+#include "Enums.h"
 
 
 class GeneticAlgorithm {
 public:
     // VARIABLES
 
-    // Used to determine which CO to use
-    enum crossoverOperator{uniformX, twoPointX};
-
-    // Used to determine which FF to use
-    enum fitnessFunction{countingOnes,
-        tightlyDeceptiveTrap,
-        tightlyNonDeceptiveTrap,
-        randomlyDeceptiveTrap,
-        randomlyNonDeceptiveTrap};
-
     // FUNCTIONS
 
     // Performs a single run of the algorithm with specified
     // crossover operator, fitness function and population size
-    std::vector<bool> run(crossoverOperator co, fitnessFunction ff, int population);
+    std::vector<bool> run(CrossoverOperator co, FitnessFunction ff, int population);
+    GeneticAlgorithm(GeneticAlgorithm &ga);
+    GeneticAlgorithm();
 
 private:
     // FUNCTIONS
@@ -39,12 +32,11 @@ private:
     std::vector<bool> findBestSolution();
     void performUniformCrossover();
     void performTwoPointCrossover();
-    int countingOnesFitnessCalculation(Individual individual);
-    int tightlyDeceptiveTrapFitnessCalculation(Individual individual);
-    int tightlyNonDeceptiveTrapFitnessCalculation(Individual individual);
-    int randomlyDeceptiveTrapFitnessCalculation(Individual individual);
-    int randomlyNonDeceptiveTrapFitnessCalculation(Individual individual);
-
+    int countingOnesFitnessCalculation(Individual* individual);
+    int tightlyDeceptiveTrapFitnessCalculation(Individual* individual);
+    int tightlyNonDeceptiveTrapFitnessCalculation(Individual* individual);
+    int randomlyDeceptiveTrapFitnessCalculation(Individual* individual);
+    int randomlyNonDeceptiveTrapFitnessCalculation(Individual* individual);
 
     // VARIABLES
 
@@ -53,8 +45,7 @@ private:
     int populationSize;
     std::random_device random;
     std::mt19937 mt;
-    fitnessFunction fitnessFunc;
-
+    FitnessFunction fitnessFunc;
     bool aChildWasAddedToThePopulation;
 };
 

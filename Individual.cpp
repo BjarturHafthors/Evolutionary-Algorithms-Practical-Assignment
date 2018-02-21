@@ -17,6 +17,18 @@ Individual::Individual(bool currentlyInPopulation)
     }
 }
 
+Individual::Individual(const Individual &individual)
+{
+    this->currentlyInPopulation = individual.isCurrentlyInPopulation();
+    this->setValues(individual.getValues());
+    this->setFitness(individual.getFitness());
+}
+
+Individual::Individual()
+{
+
+}
+
 void Individual::initializeValues()
 {
     // Initialize random distribution
@@ -76,4 +88,17 @@ bool operator<(const Individual &i1, const Individual &i2){
     {
         return false;
     }
+}
+
+Individual& Individual::operator=(const Individual& individual)
+{
+// check for self-assignment
+    if (&individual == this)
+        return *this;
+
+    this->currentlyInPopulation = individual.isCurrentlyInPopulation();
+    this->setValues(individual.getValues());
+    this->setFitness(individual.getFitness());
+
+    return *this;
 }
