@@ -36,6 +36,7 @@ private:
     void deletePopulation();
     void setIndividualFitness(Individual* individual);
     void selectIndividualsForNextGeneration();
+    std::vector<bool> findBestSolution();
     void performUniformCrossover();
     void performTwoPointCrossover();
     int countingOnesFitnessCalculation(Individual individual);
@@ -44,15 +45,17 @@ private:
     int randomlyDeceptiveTrapFitnessCalculation(Individual individual);
     int randomlyNonDeceptiveTrapFitnessCalculation(Individual individual);
 
+
     // VARIABLES
 
     std::vector<Individual*> population;
     std::vector<Individual*> children;
-    const int FAMILY_SIZE = 4;
     int populationSize;
     std::random_device random;
     std::mt19937 mt;
     fitnessFunction fitnessFunc;
+
+    bool aChildWasAddedToThePopulation;
 };
 
 

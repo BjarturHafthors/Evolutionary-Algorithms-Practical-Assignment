@@ -15,11 +15,12 @@ std::vector<bool> GeneticAlgorithm::run(crossoverOperator co, fitnessFunction ff
     this->populationSize = pSize;
     initializePopulation();
 
-    bool aChildWasAddedToThePopulation = true;
-
     // Repeat until children are not used any more
     do
     {
+        // Reset condition
+        aChildWasAddedToThePopulation = false;
+
         // Randomly shuffle population
         std::shuffle(population.begin(), population.end(), mt);
 
@@ -36,14 +37,15 @@ std::vector<bool> GeneticAlgorithm::run(crossoverOperator co, fitnessFunction ff
 
         selectIndividualsForNextGeneration();
 
-        // TODO: Update condition (aChildWasAdded)
-
     }
     while (aChildWasAddedToThePopulation);
+
+    std::vector<bool> bestSolution = findBestSolution();
 
     deletePopulation();
 
     // Return best solution found
+    return bestSolution;
 }
 
 void GeneticAlgorithm::initializePopulation()
@@ -120,8 +122,6 @@ void GeneticAlgorithm::setIndividualFitness(Individual* individual)
 
 void GeneticAlgorithm::selectIndividualsForNextGeneration()
 {
-    // TODO: Pick best 2 solutions of each family of 4
-
     for (int i = 0; i < populationSize - 1; i += 2)
     {
         // Get family
@@ -135,19 +135,77 @@ void GeneticAlgorithm::selectIndividualsForNextGeneration()
         // whether child or parent (childs appear first)
         std::sort(family.begin(), family.end());
 
-        bool bothChildren = !family[0].isCurrentlyInPopulation() && !family[1].isCurrentlyInPopulation;
-        bool firstChild = !family[0].isCurrentlyInPopulation() && family[1].isCurrentlyInPopulation;
-        bool secondChild = family[0].isCurrentlyInPopulation() && !family[1].isCurrentlyInPopulation;
-
-        // Both children
-        if (bothChildren)
+        // If either is child (if this does not apply we won't update anything)
+        if (!family[0].isCurrentlyInPopulation() || !family[1].isCurrentlyInPopulation)
         {
-            population[i]->setFitness(family[0].getFitness());
-            population[i]->setValues(family[0].getValues());
-            population[i]->setFitness(family[1].getFitness());
+            // First is already in population
+            if (family[0].isCurrentlyInPopulation() && !family[1].isCurrentlyInPopulation())
+            {
+                // If population[i] is the parent, update population[i+1]
+                if (population[i]->getValues() == family[0].getValues())
+                {
+                    population[i + 1]->setFitness(family[1].getFitness());
+                    population[i + 1]->setValues(family[1].getValues());
+                }
+                // If population[i+1] is the parent, update population[i]
+                else
+                {
+                    population[i]->setFitness(family[1].getFitness());
+                    population[i]->setValues(family[1].getValues());
+                }
+            }
+            // Second is already in population
+            else if (family[1].isCurrentlyInPopulation() && !family[0].isCurrentlyInPopulation())
+            {
+                // If population[i] is the parent, update population[i+1]
+                if (population[i]->getValues() == family[1].getValues())
+                {
+                    population[i+1]->setFitness(family[0].getFitness());
+                    population[i+1]->setValues(family[0].getValues());
+                }
+                // If population[i+1] is the parent, update population[i]
+                else
+                {
+                    population[i]->setFitness(family[0].getFitness());
+                    population[i]->setValues(family[0].getValues());
+                }
+            }
+            // Both are children
+            else
+            {
+                // Update both
+                population[i]->setFitness(family[0].getFitness());
+                population[i]->setValues(family[0].getValues());
+                population[i+1]->setFitness(family[1].getFitness());
+                population[i+1]->setValues(family[1].getValues());
+            }
+
+            // Update while condition
+            if (!aChildWasAddedToThePopulation)
+            {
+                aChildWasAddedToThePopulation = true;
+            }
         }
     }
 }
+
+std::vector<bool> GeneticAlgorithm::findBestSolution()
+{
+    int highestFitnessFound = -1;
+    std::vector<bool> highestFitnessValues;
+
+    for (int i = 0; i < population.size(); i++)
+    {
+        if (population[i]->getFitness() > highestFitnessFound)
+        {
+            highestFitnessFound = population[i]->getFitness();
+            highestFitnessValues = population[i]->getValues();
+        }
+    }
+
+    return highestFitnessValues;
+}
+
 void GeneticAlgorithm::performUniformCrossover()
 {
     // Initialize random distribution
@@ -190,7 +248,19 @@ void GeneticAlgorithm::performTwoPointCrossover()
 
 int GeneticAlgorithm::countingOnesFitnessCalculation(Individual individual)
 {
-    // TODO: Implement..
+    std::vector<bool> values = individual.getValues();
+
+    int fitness = 0;
+
+    for (int i = 0; i < values.size(); i++)
+    {
+        if (values[i])
+        {
+            fitness++;
+        }
+    }
+
+    return fitness;
 }
 
 int GeneticAlgorithm::tightlyDeceptiveTrapFitnessCalculation(Individual individual)
