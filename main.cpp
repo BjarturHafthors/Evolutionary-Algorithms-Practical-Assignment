@@ -29,7 +29,6 @@ int main() {
     bool res;
 
     // Experiment 1
-    // If failure --> double popsize and try again.
     do
     {
         std::cout << "Trying with population size = " << populationSize << ": ";
@@ -41,6 +40,7 @@ int main() {
         }
         else
         {
+            // If failure --> double popsize and try again.
             std::cout << "Failed!" << std::endl;
             populationSize*=2;
         }
@@ -52,6 +52,16 @@ int main() {
     if(populationSize*2 > MAXIMUM_POPULATION_SIZE){std::cout<<std::endl<<"Finished training"<<std::endl;}
     else{
         //Perform bisection search to find minimal value of populationSize
+        int upper =  populationSize;        //This value returns true
+        int lower = populationSize/2;       //This value returned false
+        do{
+            int populationSize = (lower+upper)/2;
+            res = doTraining(ga, crossoverOperator, fitnessFunction, populationSize, NUM_TRAINING_ITER, MIN_TRAINING_SUCC, maxFitness);
+            if(res){upper = populationSize;}    //Succesful run results in lowering the upper bound
+            else{lower = populationSize;}       //Unsuccesful run results in increasing lower bound
+        }
+        while(upper - lower > 10 );
+
     }
 
     // TODO: Experiments 2 - 5

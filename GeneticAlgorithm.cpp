@@ -64,7 +64,7 @@ int GeneticAlgorithm::run(CrossoverOperator co, FitnessFunction ff, int pSize)
 
 void GeneticAlgorithm::initializePopulation()
 {
-   // Allocate memory for population
+    // Allocate memory for population
     population = std::vector<Individual*>();
 
     for (int i = 0; i < populationSize; i++)
@@ -161,14 +161,14 @@ void GeneticAlgorithm::selectIndividualsForNextGeneration()
                     population[i + 1]->setFitness(family[1].getFitness());
                     population[i + 1]->setValues(family[1].getValues());
                 }
-                // If population[i+1] is the parent, update population[i]
+                    // If population[i+1] is the parent, update population[i]
                 else
                 {
                     population[i]->setFitness(family[1].getFitness());
                     population[i]->setValues(family[1].getValues());
                 }
             }
-            // Second is already in population
+                // Second is already in population
             else if (family[1].isCurrentlyInPopulation() && !family[0].isCurrentlyInPopulation())
             {
                 // If population[i] is the parent, update population[i+1]
@@ -177,14 +177,14 @@ void GeneticAlgorithm::selectIndividualsForNextGeneration()
                     population[i+1]->setFitness(family[0].getFitness());
                     population[i+1]->setValues(family[0].getValues());
                 }
-                // If population[i+1] is the parent, update population[i]
+                    // If population[i+1] is the parent, update population[i]
                 else
                 {
                     population[i]->setFitness(family[0].getFitness());
                     population[i]->setValues(family[0].getValues());
                 }
             }
-            // Both are children
+                // Both are children
             else
             {
                 // Update both
@@ -297,44 +297,45 @@ void GeneticAlgorithm::performTwoPointCrossover()
         // Save fitness in individuals
         setIndividualFitness(children[i]);
         setIndividualFitness(children[i+1]);
-}
-
-int GeneticAlgorithm::countingOnesFitnessCalculation(Individual* individual)
-{
-    std::vector<bool> values = individual->getValues();
-
-    int fitness = 0;
-
-    for (int i = 0; i < values.size(); i++)
-    {
-        if (values[i])
-        {
-            fitness++;
-        }
     }
 
-    return fitness;
-}
+    int GeneticAlgorithm::countingOnesFitnessCalculation(Individual* individual)
+    {
+        std::vector<bool> values = individual->getValues();
 
-int GeneticAlgorithm::tightlyDeceptiveTrapFitnessCalculation(Individual* individual)
-{
-    // TODO: Implement..
-    return 0;
-}
-int GeneticAlgorithm::tightlyNonDeceptiveTrapFitnessCalculation(Individual* individual)
-{
-    // TODO: Implement..
-    return 0;
-}
+        int fitness = 0;
 
-int GeneticAlgorithm::randomlyDeceptiveTrapFitnessCalculation(Individual* individual)
-{
-    // TODO: Implement..
-    return 0;
-}
+        for (int i = 0; i < values.size(); i++)
+        {
+            if (values[i])
+            {
+                fitness++;
+            }
+        }
 
-int GeneticAlgorithm::randomlyNonDeceptiveTrapFitnessCalculation(Individual* individual)
-{
-    // TODO: Implement..
-    return 0;
+        return fitness;
+    }
+
+    int GeneticAlgorithm::tightlyDeceptiveTrapFitnessCalculation(Individual* individual)
+    {
+        // TODO: Implement..
+        return 0;
+    }
+    int GeneticAlgorithm::tightlyNonDeceptiveTrapFitnessCalculation(Individual* individual)
+    {
+        // TODO: Implement..
+        return 0;
+    }
+
+    int GeneticAlgorithm::randomlyDeceptiveTrapFitnessCalculation(Individual* individual)
+    {
+        // TODO: Implement..
+        return 0;
+    }
+
+    int GeneticAlgorithm::randomlyNonDeceptiveTrapFitnessCalculation(Individual* individual)
+    {
+        // TODO: Implement..
+        return 0;
+    }
 }
