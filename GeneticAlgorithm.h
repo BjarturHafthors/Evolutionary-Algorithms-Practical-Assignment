@@ -18,7 +18,7 @@ public:
 
     // Performs a single run of the algorithm with specified
     // crossover operator, fitness function and population size
-    std::vector<bool> run(CrossoverOperator co, FitnessFunction ff, int population);
+    int run(CrossoverOperator co, FitnessFunction ff, int population);
     GeneticAlgorithm(GeneticAlgorithm &ga);
     GeneticAlgorithm();
 
@@ -29,7 +29,7 @@ private:
     void deletePopulation();
     void setIndividualFitness(Individual* individual);
     void selectIndividualsForNextGeneration();
-    std::vector<bool> findBestSolution();
+    int findBestSolution();
     void performUniformCrossover();
     void performTwoPointCrossover();
     int countingOnesFitnessCalculation(Individual* individual);

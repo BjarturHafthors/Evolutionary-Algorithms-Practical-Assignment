@@ -17,7 +17,7 @@ GeneticAlgorithm::GeneticAlgorithm(GeneticAlgorithm &ga)
     this->mt = ga.mt;;
 }
 
-std::vector<bool> GeneticAlgorithm::run(CrossoverOperator co, FitnessFunction ff, int pSize)
+int GeneticAlgorithm::run(CrossoverOperator co, FitnessFunction ff, int pSize)
 {
     fitnessFunc = ff;
 
@@ -53,12 +53,12 @@ std::vector<bool> GeneticAlgorithm::run(CrossoverOperator co, FitnessFunction ff
     }
     while (aChildWasAddedToThePopulation);
 
-    std::vector<bool> bestSolution = findBestSolution();
+    int bestSolutionFitness = findBestSolution();
 
     deletePopulation();
 
     // Return best solution found
-    return bestSolution;
+    return bestSolutionFitness;
 }
 
 void GeneticAlgorithm::initializePopulation()
@@ -202,21 +202,19 @@ void GeneticAlgorithm::selectIndividualsForNextGeneration()
     }
 }
 
-std::vector<bool> GeneticAlgorithm::findBestSolution()
+int GeneticAlgorithm::findBestSolution()
 {
     int highestFitnessFound = -1;
-    std::vector<bool> highestFitnessValues;
 
     for (int i = 0; i < population.size(); i++)
     {
         if (population[i]->getFitness() > highestFitnessFound)
         {
             highestFitnessFound = population[i]->getFitness();
-            highestFitnessValues = population[i]->getValues();
         }
     }
 
-    return highestFitnessValues;
+    return highestFitnessFound;
 }
 
 void GeneticAlgorithm::performUniformCrossover()

@@ -44,15 +44,13 @@ bool doTraining(GeneticAlgorithm ga, CrossoverOperator cx, FitnessFunction ff, i
     int count = 0;
     // Rep 25 times
     for(int n = 0; n < is; n++){
-        std::vector<bool> bestSolutionFound = ga.run(cx, ff, ps);
-        //Compute fitness value for bestSolution
-        int fitness = 404;
+        int bestSolutionFitness = ga.run(cx, ff, ps);
 
         // Write fitness value
-        printResults(fitness, n, cx,ff,ps);
+        printResults(bestSolutionFitness, n, cx,ff,ps);
 
         //Add to amount of successes
-        if(fitness == mf){count++;}
+        if(bestSolutionFitness == mf){count++;}
     }
     return(count >= ms);
 }
