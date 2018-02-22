@@ -259,7 +259,44 @@ void GeneticAlgorithm::performUniformCrossover()
 
 void GeneticAlgorithm::performTwoPointCrossover()
 {
-    // TODO: Implement..
+    // Initialize random distribution
+    std::uniform_int_distribution<int> distribution(1,98);
+
+    int point1 = distribution(mt);
+    int point2 = distribution(mt);
+
+    while (point2 == point1)
+    {
+        point2 = distribution(mt);
+    }
+
+    for (int i = 0; i < population.size()-1; i+=2)
+    {
+        std::vector<bool> child1Values = std::vector<bool>();
+        std::vector<bool> child2Values = std::vector<bool>();
+        std::vector<bool> parent1Values = population[i]->getValues();
+        std::vector<bool> parent2Values = population[i+1]->getValues();
+
+        for (int j = 0; j < parent1Values.size(); j++)
+        {
+            if (j < point1 || j > point2)
+            {
+                child1Values.push_back(parent1Values[j]);
+                child2Values.push_back(parent2Values[j]);
+            }
+            else
+            {
+                child1Values.push_back(parent2Values[j]);
+                child2Values.push_back(parent1Values[j]);
+            }
+        }
+
+        children[i]->setValues(child1Values);
+        children[i+1]->setValues(child2Values);
+
+        // Save fitness in individuals
+        setIndividualFitness(children[i]);
+        setIndividualFitness(children[i+1]);
 }
 
 int GeneticAlgorithm::countingOnesFitnessCalculation(Individual* individual)
