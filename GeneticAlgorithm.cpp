@@ -29,6 +29,20 @@ int GeneticAlgorithm::run(CrossoverOperator co, FitnessFunction ff, int pSize)
     this->populationSize = pSize;
     initializePopulation();
 
+    // Set random permutations if needed
+    if (fitnessFunc == randomlyDeceptiveTrap || fitnessFunc == randomlyNonDeceptiveTrap)
+    {
+        permutation = std::vector<int>();
+
+        for (int i = 0; i < population.size(); i++)
+        {
+            permutation.push_back(i);
+        }
+
+        // Randomizing
+        std::shuffle(permutation.begin(), permutation.end(), mt);
+    }
+
     // Repeat until children are not used any more
     do
     {
@@ -118,16 +132,20 @@ void GeneticAlgorithm::setIndividualFitness(Individual* individual)
             fitness = countingOnesFitnessCalculation(individual);
             break;
         case FitnessFunction::tightlyDeceptiveTrap:
-            fitness = tightlyTrapFitnessCalculation(4, 1, individual);
+            // Values based on project description - k and d respectively
+            fitness = tightlyLinkedTrapFitnessCalculation(4, 1, individual);
             break;
         case FitnessFunction::tightlyNonDeceptiveTrap:
-            fitness = tightlyTrapFitnessCalculation(4, 2.5, individual);
+            // Values based on project description - k and d respectively
+            fitness = tightlyLinkedTrapFitnessCalculation(4, 2.5, individual);
             break;
         case FitnessFunction::randomlyDeceptiveTrap:
-            fitness = randomlyDeceptiveTrapFitnessCalculation(individual);
+            // Values based on project description - k and d respectively
+            fitness = randomlyLinkedTrapFitnessCalculation(4, 1, individual);
             break;
         case FitnessFunction::randomlyNonDeceptiveTrap:
-            fitness = randomlyNonDeceptiveTrapFitnessCalculation(individual);
+            // Values based on project description - k and d respectively
+            fitness = randomlyLinkedTrapFitnessCalculation(4, 2.5, individual);
             break;
     }
 
@@ -299,6 +317,7 @@ void GeneticAlgorithm::performTwoPointCrossover()
         setIndividualFitness(children[i + 1]);
     }
 }
+
 int GeneticAlgorithm::countingOnesFitnessCalculation(Individual* individual)
 {
     std::vector<bool> values = individual->getValues();
@@ -316,7 +335,7 @@ int GeneticAlgorithm::countingOnesFitnessCalculation(Individual* individual)
     return fitness;
 }
 
-int GeneticAlgorithm::tightlyTrapFitnessCalculation(int k, float d, Individual* individual)
+int GeneticAlgorithm::tightlyLinkedTrapFitnessCalculation(int k, float d, Individual* individual)
 {
     float fraction = (k-d)/(k-1);
     std::vector<bool> values = individual->getValues();
@@ -348,14 +367,34 @@ int GeneticAlgorithm::tightlyTrapFitnessCalculation(int k, float d, Individual* 
     return fitness;
 }
 
-int GeneticAlgorithm::randomlyDeceptiveTrapFitnessCalculation(Individual* individual)
+int GeneticAlgorithm::randomlyLinkedTrapFitnessCalculation(int k, float d, Individual* individual)
 {
-    // TODO: Implement..
-    return 0;
-}
+    float fraction = (k-d)/(k-1);
+    std::vector<bool> values = individual->getValues();
 
-int GeneticAlgorithm::randomlyNonDeceptiveTrapFitnessCalculation(Individual* individual)
-{
-    // TODO: Implement..
-    return 0;
+    int fitness = 0;
+
+    for (int i = 0; i < values.size()/k; i++)
+    {
+        int numberOfOnes = 0;
+
+        for (int j = 0; j < k; j++)
+        {
+            if (values[permutation[i]])
+            {
+                numberOfOnes++;
+            }
+        }
+
+        if (numberOfOnes == k)
+        {
+            fitness += k;
+        }
+        else
+        {
+            fitness += k - d - fraction*numberOfOnes;
+        }
+    }
+
+    return fitness;
 }

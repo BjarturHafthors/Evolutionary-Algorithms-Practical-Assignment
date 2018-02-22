@@ -33,9 +33,8 @@ private:
     void performUniformCrossover();
     void performTwoPointCrossover();
     int countingOnesFitnessCalculation(Individual* individual);
-    int tightlyTrapFitnessCalculation(int k, float d, Individual* individual);
-    int randomlyDeceptiveTrapFitnessCalculation(Individual* individual);
-    int randomlyNonDeceptiveTrapFitnessCalculation(Individual* individual);
+    int tightlyLinkedTrapFitnessCalculation(int k, float d, Individual* individual);
+    int randomlyLinkedTrapFitnessCalculation(int k, float d, Individual* individual);
 
     // VARIABLES
 
@@ -46,6 +45,7 @@ private:
     std::mt19937 mt;
     FitnessFunction fitnessFunc;
     bool aChildWasAddedToThePopulation;
+    std::vector<int> permutation;
 };
 
 
