@@ -66,7 +66,7 @@ bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, 
         int bestSolutionFitness = ga.run(cx, ff, ps);
 
         // Write fitness value
-        printResults(bestSolutionFitness, n, cx,ff,ps);
+        // printResults(bestSolutionFitness, n, cx,ff,ps);
 
         //Add to amount of successes
         if(bestSolutionFitness == mf){count++;}
