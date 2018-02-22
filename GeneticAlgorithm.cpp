@@ -118,10 +118,10 @@ void GeneticAlgorithm::setIndividualFitness(Individual* individual)
             fitness = countingOnesFitnessCalculation(individual);
             break;
         case FitnessFunction::tightlyDeceptiveTrap:
-            fitness = tightlyDeceptiveTrapFitnessCalculation(individual);
+            fitness = tightlyTrapFitnessCalculation(4, 1, individual);
             break;
         case FitnessFunction::tightlyNonDeceptiveTrap:
-            fitness = tightlyNonDeceptiveTrapFitnessCalculation(individual);
+            fitness = tightlyTrapFitnessCalculation(4, 2.5, individual);
             break;
         case FitnessFunction::randomlyDeceptiveTrap:
             fitness = randomlyDeceptiveTrapFitnessCalculation(individual);
@@ -316,15 +316,36 @@ int GeneticAlgorithm::countingOnesFitnessCalculation(Individual* individual)
     return fitness;
 }
 
-int GeneticAlgorithm::tightlyDeceptiveTrapFitnessCalculation(Individual* individual)
+int GeneticAlgorithm::tightlyTrapFitnessCalculation(int k, float d, Individual* individual)
 {
-    // TODO: Implement..
-    return 0;
-}
-int GeneticAlgorithm::tightlyNonDeceptiveTrapFitnessCalculation(Individual* individual)
-{
-    // TODO: Implement..
-    return 0;
+    float fraction = (k-d)/(k-1);
+    std::vector<bool> values = individual->getValues();
+
+    int fitness = 0;
+
+    for (int i = 0; i < values.size()/k; i++)
+    {
+        int numberOfOnes = 0;
+
+        for (int j = 0; j < k; j++)
+        {
+            if (values[i+j])
+            {
+                numberOfOnes++;
+            }
+        }
+
+        if (numberOfOnes == k)
+        {
+            fitness += k;
+        }
+        else
+        {
+            fitness += k - d - fraction*numberOfOnes;
+        }
+    }
+
+    return fitness;
 }
 
 int GeneticAlgorithm::randomlyDeceptiveTrapFitnessCalculation(Individual* individual)

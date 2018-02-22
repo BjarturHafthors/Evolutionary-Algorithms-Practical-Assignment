@@ -33,8 +33,7 @@ private:
     void performUniformCrossover();
     void performTwoPointCrossover();
     int countingOnesFitnessCalculation(Individual* individual);
-    int tightlyDeceptiveTrapFitnessCalculation(Individual* individual);
-    int tightlyNonDeceptiveTrapFitnessCalculation(Individual* individual);
+    int tightlyTrapFitnessCalculation(int k, float d, Individual* individual);
     int randomlyDeceptiveTrapFitnessCalculation(Individual* individual);
     int randomlyNonDeceptiveTrapFitnessCalculation(Individual* individual);
 
