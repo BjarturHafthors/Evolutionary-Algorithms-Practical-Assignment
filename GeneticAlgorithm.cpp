@@ -3,6 +3,7 @@
 //
 
 #include "GeneticAlgorithm.h"
+#include <iostream>
 
 GeneticAlgorithm::GeneticAlgorithm()
 {
@@ -14,7 +15,7 @@ GeneticAlgorithm::GeneticAlgorithm(GeneticAlgorithm &ga)
     this->population = ga.population;
     this->children = ga.children;
     this->populationSize = ga.populationSize;
-    this->mt = ga.mt;;
+    this->mt = ga.mt;
 }
 
 int GeneticAlgorithm::run(CrossoverOperator co, FitnessFunction ff, int pSize)
@@ -96,13 +97,13 @@ void GeneticAlgorithm::deletePopulation()
     // Deallocate memory for population
     for (int i = 0; i < population.size(); i++)
     {
-        delete [] population[i];
+        delete population[i];
     }
 
     // Deallocate memory for population
     for (int i = 0; i < children.size(); i++)
     {
-        delete [] children[i];
+        delete children[i];
     }
 }
 
@@ -139,14 +140,14 @@ void GeneticAlgorithm::selectIndividualsForNextGeneration()
     {
         // Get family
         std::vector<Individual> family = std::vector<Individual>();
-        family.push_back(population[i]);
-        family.push_back(population[i + 1]);
-        family.push_back(children[i]);
-        family.push_back(children[i + 1]);
+        family.emplace_back(*population[i]);
+        family.emplace_back(*population[i + 1]);
+        family.emplace_back(*children[i]);
+        family.emplace_back(*children[i + 1]);
 
         // Sort family by fitness - subsorted by
         // whether child or parent (childs appear first)
-        std::sort(family.begin(), family.end());
+        std::sort(family.rbegin(), family.rend());
 
         // If either is child (if this does not apply we won't update anything)
         if (!family[0].isCurrentlyInPopulation() || !family[1].isCurrentlyInPopulation())
@@ -193,8 +194,12 @@ void GeneticAlgorithm::selectIndividualsForNextGeneration()
                 population[i+1]->setValues(family[1].getValues());
             }
 
-            // Update while condition
-            if (!aChildWasAddedToThePopulation)
+            bool allTheSame = family[0].getValues() == family[1].getValues() &&
+                              family[0].getValues() == family[2].getValues() &&
+                              family[0].getValues() == family[3].getValues();
+
+            // Update while condition if not all some solutions are the same
+            if (!aChildWasAddedToThePopulation && !allTheSame)
             {
                 aChildWasAddedToThePopulation = true;
             }
