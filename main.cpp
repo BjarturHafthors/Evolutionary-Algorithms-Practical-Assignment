@@ -75,7 +75,7 @@ int main() {
 
 bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, int ps, int it, int ms, int mf){
     std::cout << "Trying with population size = " << ps << ": ";
-    int count = 0; int generations = 0;
+    int count = 0; int generations = 0; int fFEvals = 0;
 
     //Init clock
     clock_t t = clock();
@@ -85,10 +85,9 @@ bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, 
         //Run the training step
         int bestSolutionFitness = ga.run(cx, ff, ps);
 
-        //Add to number of generations
+        //Add to number of generations and number of fitness function evaluations
         generations += ga.generationCount;
-
-        std::cout<<"generations: "<<ga.generationCount<<", popSize: "<<ps<<", FFnEvals: "<<ga.numberOfFitFnEvalualtions<<std::endl;
+        fFEvals += ga.numberOfFitFnEvalualtions;
 
         //Add to number of successes
         if(bestSolutionFitness == mf){count++;}
@@ -100,10 +99,9 @@ bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, 
     if(count >= ms) {
         std::cout << "Success! Count: " << count << std::endl;
 
-        // If succesful run: set ga.averageTimeOfLastSuccesfullRun
+        // If succesful run: set ga metrics
         ga.averageGenerationCountOfLastSucces = generations/it;
-
-        // If succesful run: set ga.avergaGenerationCountOfLastSuccesfullRun
+        ga.averageNumberOfFitFnEvaluations = fFEvals/it;
         ga.averageRuntimeOfLastSucces = (((float)t)/CLOCKS_PER_SEC)/it;
     }
     else{
