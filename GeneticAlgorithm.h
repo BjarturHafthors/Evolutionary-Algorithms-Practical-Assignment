@@ -14,6 +14,10 @@ class GeneticAlgorithm {
 public:
     // VARIABLES
 
+    int generationCount;
+    int averageGenerationCountOfLastSucces;
+    float averageRuntimeOfLastSucces;
+
     // FUNCTIONS
 
     // Performs a single run of the algorithm with specified
