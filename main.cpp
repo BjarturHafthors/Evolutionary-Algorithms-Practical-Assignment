@@ -64,7 +64,10 @@ int main() {
         // log upper
         std::cout<<"upper: "<<upper<<std::endl;
         // log metrics
-        std::cout<<"avgGenCount: "<<ga.averageGenerationCountOfLastSucces<<" avgRuntime: "<< ga.averageRuntimeOfLastSucces <<std::endl;
+        std::cout<<"avgGenCount: "<< ga.averageGenerationCountOfLastSucces
+                 <<" avgRuntime: "<< ga.averageRuntimeOfLastSucces
+                 <<" avgFFevals: "<< ga.numberOfFitFnEvalualtions
+                 <<std::endl;
 
     }
 
