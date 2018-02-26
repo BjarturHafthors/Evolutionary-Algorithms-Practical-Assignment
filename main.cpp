@@ -73,8 +73,6 @@ int main() {
     return 0;
 }
 
-void performExperiment()
-
 bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, int ps, int it, int ms, int mf){
     std::cout << "Trying with population size = " << ps << ": ";
     int count = 0; int generations = 0;
@@ -89,6 +87,8 @@ bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, 
 
         //Add to number of generations
         generations += ga.generationCount;
+
+        std::cout<<"generations: "<<ga.generationCount<<", popSize: "<<ps<<", FFnEvals: "<<ga.numberOfFitFnEvalualtions<<std::endl;
 
         //Add to number of successes
         if(bestSolutionFitness == mf){count++;}

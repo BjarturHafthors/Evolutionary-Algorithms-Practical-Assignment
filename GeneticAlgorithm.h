@@ -17,6 +17,7 @@ public:
     int generationCount;
     int averageGenerationCountOfLastSucces;
     float averageRuntimeOfLastSucces;
+    int numberOfFitFnEvalualtions;
 
     // FUNCTIONS
 

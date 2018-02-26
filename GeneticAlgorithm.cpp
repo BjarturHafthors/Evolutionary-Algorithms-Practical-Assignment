@@ -22,6 +22,7 @@ int GeneticAlgorithm::run(CrossoverOperator co, FitnessFunction ff, int pSize)
 {
     fitnessFunc = ff;
     this->generationCount = 0;
+    this->numberOfFitFnEvalualtions = 0;
 
     // Initializing random generator
     mt = std::mt19937(random());
@@ -341,6 +342,7 @@ int GeneticAlgorithm::countingOnesFitnessCalculation(Individual* individual)
         }
     }
 
+    this->numberOfFitFnEvalualtions++;
     return fitness;
 }
 
@@ -373,6 +375,7 @@ int GeneticAlgorithm::tightlyLinkedTrapFitnessCalculation(int k, float d, Indivi
         }
     }
 
+    this->numberOfFitFnEvalualtions++;
     return fitness;
 }
 
@@ -405,5 +408,6 @@ int GeneticAlgorithm::randomlyLinkedTrapFitnessCalculation(int k, float d, Indiv
         }
     }
 
+    this->numberOfFitFnEvalualtions++;
     return fitness;
 }
