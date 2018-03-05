@@ -24,7 +24,7 @@ public:
 
     // Performs a single run of the algorithm with specified
     // crossover operator, fitness function and population size
-    int run(CrossoverOperator co, FitnessFunction ff, int population);
+    float run(CrossoverOperator co, FitnessFunction ff, int population);
     GeneticAlgorithm(GeneticAlgorithm &ga);
     GeneticAlgorithm();
 
@@ -35,12 +35,12 @@ private:
     void deletePopulation();
     void setIndividualFitness(Individual* individual);
     void selectIndividualsForNextGeneration();
-    int findBestSolution();
+    float findBestSolution();
     void performUniformCrossover();
     void performTwoPointCrossover();
-    int countingOnesFitnessCalculation(Individual* individual);
-    int tightlyLinkedTrapFitnessCalculation(int k, float d, Individual* individual);
-    int randomlyLinkedTrapFitnessCalculation(int k, float d, Individual* individual);
+    float countingOnesFitnessCalculation(Individual* individual);
+    float tightlyLinkedTrapFitnessCalculation(int k, float d, Individual* individual);
+    float randomlyLinkedTrapFitnessCalculation(int k, float d, Individual* individual);
 
     // VARIABLES
 

@@ -17,9 +17,9 @@ int main() {
     GeneticAlgorithm ga;
 
     CrossoverOperator crossoverOperator = CrossoverOperator::uniformX;
-    FitnessFunction fitnessFunction = FitnessFunction::countingOnes;
+    FitnessFunction fitnessFunction = FitnessFunction::tightlyNonDeceptiveTrap;
     int populationSize = INITIAL_POPULATION_SIZE;
-    int maxFitness = 100;
+    float maxFitness = 100;
 
     /* TODO: Repeat each experiment 25x for each population size
        TODO: and repeat that with population size change rules
@@ -84,10 +84,12 @@ bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, 
     //Init clock
     clock_t t = clock();
 
+    float bestFound = 0;
+
     // Rep 25 times
     for(int n = 0; n < it; n++){
         //Run the training step
-        int bestSolutionFitness = ga.run(cx, ff, ps);
+        float bestSolutionFitness = ga.run(cx, ff, ps);
 
         //Add to number of generations and number of fitness function evaluations
         generations += ga.generationCount;
@@ -95,6 +97,11 @@ bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, 
 
         //Add to number of successes
         if(bestSolutionFitness == mf){count++;}
+
+        if (bestSolutionFitness > bestFound)
+        {
+            bestFound = bestSolutionFitness;
+        }
     }
 
     //Save time spent
@@ -110,6 +117,7 @@ bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, 
     }
     else{
         std::cout << "Failed! Count:" << count << std::endl;
+        std::cout << "Best fitness found was: " << bestFound << std::endl;
     }
 
     return(count >= ms);
