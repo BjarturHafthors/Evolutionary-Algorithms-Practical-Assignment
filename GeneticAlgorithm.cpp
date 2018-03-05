@@ -25,6 +25,16 @@ int GeneticAlgorithm::run(CrossoverOperator co, FitnessFunction ff, int pSize)
     // Initializing random generator
     mt = std::mt19937(random());
 
+    switch (co)
+    {
+        case uniformX:
+            distribution = std::uniform_int_distribution<int>(0,1);
+            break;
+        case twoPointX:
+            distribution = std::uniform_int_distribution<int>(1,98);
+    }
+
+
     // Initializing population
     this->populationSize = pSize;
     initializePopulation();
@@ -242,9 +252,6 @@ int GeneticAlgorithm::findBestSolution()
 
 void GeneticAlgorithm::performUniformCrossover()
 {
-    // Initialize random distribution
-    std::uniform_int_distribution<int> distribution(0,1);
-
     for (int i = 0; i < population.size()-1; i+=2)
     {
         std::vector<bool> child1Values = std::vector<bool>();
@@ -277,9 +284,6 @@ void GeneticAlgorithm::performUniformCrossover()
 
 void GeneticAlgorithm::performTwoPointCrossover()
 {
-    // Initialize random distribution
-    std::uniform_int_distribution<int> distribution(1, 98);
-
     int point1 = distribution(mt);
     int point2 = distribution(mt);
 

@@ -46,6 +46,7 @@ private:
     FitnessFunction fitnessFunc;
     bool aChildWasAddedToThePopulation;
     std::vector<int> permutation;
+    std::uniform_int_distribution<int> distribution;
 };
 
 
