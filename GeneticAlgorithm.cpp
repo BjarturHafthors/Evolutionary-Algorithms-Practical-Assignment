@@ -225,9 +225,9 @@ void GeneticAlgorithm::selectIndividualsForNextGeneration()
                 population[i+1]->setValues(family[1].getValues());
             }
 
-            bool allTheSame = family[0].getValues() == family[1].getValues() &&
-                              family[0].getValues() == family[2].getValues() &&
-                              family[0].getValues() == family[3].getValues();
+            bool allTheSame = family[0].getFitness() == family[1].getFitness() &&
+                              family[0].getFitness() == family[2].getFitness() &&
+                              family[0].getFitness() == family[3].getFitness();
 
             // Update while condition if not all some solutions are the same
             if (!aChildWasAddedToThePopulation && !allTheSame)
@@ -300,6 +300,15 @@ void GeneticAlgorithm::performTwoPointCrossover()
     while (point2 == point1)
     {
         point2 = distribution(mt);
+    }
+
+    // Make sure point1 is lower
+    if (point1 > point2)
+    {
+        // Swap
+        int temp = point1;
+        point1 = point2;
+        point2 = temp;
     }
 
     for (int i = 0; i < population.size() - 1; i += 2)
