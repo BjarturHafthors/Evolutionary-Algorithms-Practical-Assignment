@@ -17,7 +17,7 @@ int main() {
     GeneticAlgorithm ga;
 
     CrossoverOperator crossoverOperator = CrossoverOperator::uniformX;
-    FitnessFunction fitnessFunction = FitnessFunction::tightlyNonDeceptiveTrap;
+    FitnessFunction fitnessFunction = FitnessFunction::countingOnes;
     int populationSize = INITIAL_POPULATION_SIZE;
     float maxFitness = 100;
 

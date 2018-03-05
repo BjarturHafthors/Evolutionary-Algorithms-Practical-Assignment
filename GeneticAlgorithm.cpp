@@ -41,7 +41,7 @@ float GeneticAlgorithm::run(CrossoverOperator co, FitnessFunction ff, int pSize)
     {
         permutation = std::vector<int>();
 
-        for (int i = 0; i < pSize; i++)
+        for (int i = 0; i < Individual::STRING_LENGTH; i++)
         {
             permutation.push_back(i);
         }

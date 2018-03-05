@@ -12,7 +12,7 @@
 class Individual
 {
 public:
-    const int STRING_LENGTH = 100;
+    static const int STRING_LENGTH = 100;
     Individual(bool currentlyInPopulation);
     Individual(const Individual &individual);
     Individual();
