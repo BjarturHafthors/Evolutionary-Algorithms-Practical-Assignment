@@ -16,7 +16,7 @@ int main() {
     // Create instance of GA
     GeneticAlgorithm ga;
 
-    CrossoverOperator crossoverOperator = CrossoverOperator::uniformX;
+    CrossoverOperator crossoverOperator = CrossoverOperator::twoPointX;
     FitnessFunction fitnessFunction = FitnessFunction::countingOnes;
     int populationSize = INITIAL_POPULATION_SIZE;
     float maxFitness = 100;

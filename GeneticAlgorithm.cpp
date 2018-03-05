@@ -293,25 +293,25 @@ void GeneticAlgorithm::performUniformCrossover()
 
 void GeneticAlgorithm::performTwoPointCrossover()
 {
-    int point1 = distribution(mt);
-    int point2 = distribution(mt);
-
-    while (point2 == point1)
-    {
-        point2 = distribution(mt);
-    }
-
-    // Make sure point1 is lower
-    if (point1 > point2)
-    {
-        // Swap
-        int temp = point1;
-        point1 = point2;
-        point2 = temp;
-    }
-
     for (int i = 0; i < population.size() - 1; i += 2)
     {
+
+        int point1 = distribution(mt);
+        int point2 = distribution(mt);
+
+        while (point2 == point1)
+        {
+            point2 = distribution(mt);
+        }
+
+        // Make sure point1 is lower
+        if (point1 > point2)
+        {
+            // Swap
+            int temp = point1;
+            point1 = point2;
+            point2 = temp;
+        }
         std::vector<bool> child1Values = std::vector<bool>();
         std::vector<bool> child2Values = std::vector<bool>();
         std::vector<bool> parent1Values = population[i]->getValues();
