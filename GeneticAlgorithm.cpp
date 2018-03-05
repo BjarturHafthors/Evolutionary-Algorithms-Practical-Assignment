@@ -21,6 +21,8 @@ GeneticAlgorithm::GeneticAlgorithm(GeneticAlgorithm &ga)
 int GeneticAlgorithm::run(CrossoverOperator co, FitnessFunction ff, int pSize)
 {
     fitnessFunc = ff;
+    this->generationCount = 0;
+    this->numberOfFitFnEvalualtions = 0;
 
     // Initializing random generator
     mt = std::mt19937(random());
@@ -58,6 +60,7 @@ int GeneticAlgorithm::run(CrossoverOperator co, FitnessFunction ff, int pSize)
     {
         // Reset condition
         aChildWasAddedToThePopulation = false;
+        this->generationCount += 1 ;
 
         // Randomly shuffle population
         std::shuffle(population.begin(), population.end(), mt);
@@ -261,16 +264,23 @@ void GeneticAlgorithm::performUniformCrossover()
 
         for (int j = 0; j < parent1Values.size(); j++)
         {
-            if ((bool) distribution(mt))
-            {
+            if(parent1Values[j] == parent2Values[j]){
                 child1Values.push_back(parent1Values[j]);
-                child2Values.push_back(parent2Values[j]);
-            }
-            else
-            {
-                child1Values.push_back(parent2Values[j]);
                 child2Values.push_back(parent1Values[j]);
             }
+            else{
+                if ((bool) distribution(mt))
+                {
+                    child1Values.push_back(parent1Values[j]);
+                    child2Values.push_back(parent2Values[j]);
+                }
+                else
+                {
+                    child1Values.push_back(parent2Values[j]);
+                    child2Values.push_back(parent1Values[j]);
+                }
+            }
+
         }
 
         children[i]->setValues(child1Values);
@@ -336,6 +346,7 @@ int GeneticAlgorithm::countingOnesFitnessCalculation(Individual* individual)
         }
     }
 
+    this->numberOfFitFnEvalualtions++;
     return fitness;
 }
 
@@ -368,6 +379,7 @@ int GeneticAlgorithm::tightlyLinkedTrapFitnessCalculation(int k, float d, Indivi
         }
     }
 
+    this->numberOfFitFnEvalualtions++;
     return fitness;
 }
 
@@ -400,5 +412,6 @@ int GeneticAlgorithm::randomlyLinkedTrapFitnessCalculation(int k, float d, Indiv
         }
     }
 
+    this->numberOfFitFnEvalualtions++;
     return fitness;
 }

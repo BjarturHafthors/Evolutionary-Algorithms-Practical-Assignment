@@ -1,5 +1,6 @@
 #include "GeneticAlgorithm.h"
 #include <iostream>
+#include <time.h>
 
 void printResults(int fness, int iter, int cx, int ff, int ps);
 bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, int ps, int is, int ms, int mf);
@@ -31,23 +32,16 @@ int main() {
     // Experiment 1
     do
     {
-        std::cout << "Trying with population size = " << populationSize << ": ";
         res = doTraining(ga, crossoverOperator, fitnessFunction, populationSize, NUM_TRAINING_ITER, MIN_TRAINING_SUCC, maxFitness);
 
-        if (res)
+        if (!res)
         {
-            std::cout << "Success!" << std::endl;
-        }
-        else
-        {
-            // If failure --> double popsize and try again.
-            std::cout << "Failed!" << std::endl;
             populationSize*=2;
         }
     }
     while(!res && populationSize*2 <= MAXIMUM_POPULATION_SIZE);
 
-    std::cout << std::endl;
+    std::cout << "Starting bisection search" << std::endl;
 
     if(populationSize*2 > MAXIMUM_POPULATION_SIZE){std::cout<<std::endl<<"Finished training"<<std::endl;}
     else{
@@ -57,10 +51,23 @@ int main() {
         do{
             int populationSize = (lower+upper)/2;
             res = doTraining(ga, crossoverOperator, fitnessFunction, populationSize, NUM_TRAINING_ITER, MIN_TRAINING_SUCC, maxFitness);
-            if(res){upper = populationSize;}    //Succesful run results in lowering the upper bound
-            else{lower = populationSize;}       //Unsuccesful run results in increasing lower bound
+            if(res){
+                //Succesful run results in lowering the upper bound
+                upper = populationSize;
+            }
+            else{
+                //Unsuccesful run results in increasing lower bound
+                lower = populationSize;
+            }
         }
         while(upper - lower > 10 );
+        // log upper
+        std::cout<<"upper: "<<upper<<std::endl;
+        // log metrics
+        std::cout<<"avgGenCount: "<< ga.averageGenerationCountOfLastSucces
+                 <<" avgRuntime: "<< ga.averageRuntimeOfLastSucces
+                 <<" avgFFevals: "<< ga.numberOfFitFnEvalualtions
+                 <<std::endl;
 
     }
 
@@ -69,18 +76,41 @@ int main() {
     return 0;
 }
 
-bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, int ps, int is, int ms, int mf){
-    int count = 0;
+bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, int ps, int it, int ms, int mf){
+    std::cout << "Trying with population size = " << ps << ": ";
+    int count = 0; int generations = 0; int fFEvals = 0;
+
+    //Init clock
+    clock_t t = clock();
+
     // Rep 25 times
-    for(int n = 0; n < is; n++){
+    for(int n = 0; n < it; n++){
+        //Run the training step
         int bestSolutionFitness = ga.run(cx, ff, ps);
 
-        // Write fitness value
-        // printResults(bestSolutionFitness, n, cx,ff,ps);
+        //Add to number of generations and number of fitness function evaluations
+        generations += ga.generationCount;
+        fFEvals += ga.numberOfFitFnEvalualtions;
 
-        //Add to amount of successes
+        //Add to number of successes
         if(bestSolutionFitness == mf){count++;}
     }
+
+    //Save time spent
+    t = clock() - t;
+
+    if(count >= ms) {
+        std::cout << "Success! Count: " << count << std::endl;
+
+        // If succesful run: set ga metrics
+        ga.averageGenerationCountOfLastSucces = generations/it;
+        ga.averageNumberOfFitFnEvaluations = fFEvals/it;
+        ga.averageRuntimeOfLastSucces = (((float)t)/CLOCKS_PER_SEC)/it;
+    }
+    else{
+        std::cout << "Failed! Count:" << count << std::endl;
+    }
+
     return(count >= ms);
 }
 
