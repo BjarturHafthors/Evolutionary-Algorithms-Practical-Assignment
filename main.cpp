@@ -78,6 +78,7 @@ int main() {
 
 bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, int ps, int it, int ms, int mf){
     std::cout << "Trying with population size = " << ps << ": ";
+    std::cout.flush();
     int count = 0; int generations = 0; int fFEvals = 0;
 
     //Init clock
