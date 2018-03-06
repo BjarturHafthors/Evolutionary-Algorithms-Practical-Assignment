@@ -58,6 +58,7 @@ private:
     std::vector<int> permutation;
     std::uniform_int_distribution<int> distribution;
     int selectionErrors;
+    bool metricRun;
 };
 
 

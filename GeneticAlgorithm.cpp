@@ -23,6 +23,7 @@ float GeneticAlgorithm::run(CrossoverOperator co, FitnessFunction ff, int pSize,
     this->generationCount = 0;
     this->numberOfFitFnEvalualtions = 0;
     selectionErrors = 0;
+    this->metricRun = metricRun;
 
     // Initializing random generator
     mt = std::mt19937(random());
@@ -198,7 +199,10 @@ void GeneticAlgorithm::selectIndividualsForNextGeneration()
                     population[i + 1]->setFitness(family[1].getFitness());
                     population[i + 1]->setValues(family[1].getValues());
 
-                    checkSelectionErrors(population[i], population[i+1], family[1]);
+                    if (this->metricRun)
+                    {
+                        checkSelectionErrors(population[i], population[i+1], family[1]);
+                    }
                 }
                 // If population[i+1] is the parent, update population[i]
                 else
@@ -206,7 +210,10 @@ void GeneticAlgorithm::selectIndividualsForNextGeneration()
                     population[i]->setFitness(family[1].getFitness());
                     population[i]->setValues(family[1].getValues());
 
-                    checkSelectionErrors(population[i+1], population[i], family[1]);
+                    if (this->metricRun)
+                    {
+                        checkSelectionErrors(population[i+1], population[i], family[1]);
+                    }
                 }
             }
             // Second is already in population
@@ -218,7 +225,10 @@ void GeneticAlgorithm::selectIndividualsForNextGeneration()
                     population[i+1]->setFitness(family[0].getFitness());
                     population[i+1]->setValues(family[0].getValues());
 
-                    checkSelectionErrors(population[i], population[i+1], family[0]);
+                    if (this->metricRun)
+                    {
+                        checkSelectionErrors(population[i], population[i+1], family[0]);
+                    }
                 }
                 // If population[i+1] is the parent, update population[i]
                 else
@@ -226,7 +236,10 @@ void GeneticAlgorithm::selectIndividualsForNextGeneration()
                     population[i]->setFitness(family[0].getFitness());
                     population[i]->setValues(family[0].getValues());
 
-                    checkSelectionErrors(population[i+1], population[i], family[0]);
+                    if (this->metricRun)
+                    {
+                        checkSelectionErrors(population[i+1], population[i], family[0]);
+                    }
                 }
             }
             // Both are children
@@ -476,9 +489,9 @@ void GeneticAlgorithm::printMetrics()
 
     float standardDeviation = sqrt(sum);
 
-    std::cout << "Generation: " << generationCount << std::endl;
-    std::cout << "Proportion: " << proportion << std:: endl;
-    std::cout << "Avg Fitness: " << averageFitness << std::endl;
-    std::cout << "Standard Deviation: " <<  standardDeviation << std::endl;
-    std::cout << "Selection Errors: " << selectionErrors << std::endl << std::endl;
+    std::cout /*<< "Generation: "*/ << generationCount << std::endl;
+    std::cout /*<< "Proportion: "*/ << proportion << std:: endl;
+    std::cout /*<< "Avg Fitness: "*/ << averageFitness << std::endl;
+    std::cout /*<< "Standard Deviation: "*/ <<  standardDeviation << std::endl;
+    std::cout /*<< "Selection Errors: "*/ << selectionErrors << std::endl << std::endl;
 }
