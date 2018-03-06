@@ -8,6 +8,8 @@
 #include <algorithm>
 #include "Individual.h"
 #include "Enums.h"
+#include <math.h>
+#include <iostream>
 
 
 class GeneticAlgorithm {
@@ -24,7 +26,7 @@ public:
 
     // Performs a single run of the algorithm with specified
     // crossover operator, fitness function and population size
-    float run(CrossoverOperator co, FitnessFunction ff, int population);
+    float run(CrossoverOperator co, FitnessFunction ff, int population, bool metricRun);
     GeneticAlgorithm(GeneticAlgorithm &ga);
     GeneticAlgorithm();
 
@@ -41,6 +43,8 @@ private:
     float countingOnesFitnessCalculation(Individual* individual);
     float tightlyLinkedTrapFitnessCalculation(int k, float d, Individual* individual);
     float randomlyLinkedTrapFitnessCalculation(int k, float d, Individual* individual);
+    void printMetrics();
+    void checkSelectionErrors(Individual parentStaying, Individual parentLosing, Individual child);
 
     // VARIABLES
 
@@ -53,6 +57,7 @@ private:
     bool aChildWasAddedToThePopulation;
     std::vector<int> permutation;
     std::uniform_int_distribution<int> distribution;
+    int selectionErrors;
 };
 
 

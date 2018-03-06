@@ -3,12 +3,44 @@
 #include <time.h>
 
 void printResults(int fness, int iter, int cx, int ff, int ps);
+void runExperiments();
+void runMetricCheck();
 void runExperiment(GeneticAlgorithm &ga, CrossoverOperator crossoverOperator, FitnessFunction fitnessFunction);
-bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, int ps, int is, int ms, int mf);
+bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, int ps, int is, int ms, float mf);
 
 int main() {
     std::cout << "Starting Program" << std::endl << std::endl;
 
+    // This is for the 3 last plots in the report
+    runMetricCheck();
+
+    // This is for the other stuff
+    //runExperiments();
+
+    return 0;
+}
+
+void runMetricCheck()
+{
+    // Create instance of GA
+    GeneticAlgorithm ga;
+
+    int populationSize = 250;
+
+    FitnessFunction ff = FitnessFunction::countingOnes;
+
+    std::cout << "UX" << std::endl << std::endl;
+
+    float bestSolutionFitness = ga.run(CrossoverOperator::uniformX, ff, populationSize, true);
+
+    std::cout << "2PX" << std::endl << std::endl;
+
+    bestSolutionFitness = ga.run(CrossoverOperator::twoPointX, ff, populationSize, true);
+
+}
+
+void runExperiments()
+{
     // Create instance of GA
     GeneticAlgorithm ga;
 
@@ -41,8 +73,6 @@ int main() {
     runExperiment(ga, CrossoverOperator::uniformX, FitnessFunction::randomlyNonDeceptiveTrap);
     std::cout << "Two Point Crossover + Randomly Linked Non-Deceptive Trap Function" << std::endl << std::endl;
     runExperiment(ga, CrossoverOperator::twoPointX, FitnessFunction::randomlyNonDeceptiveTrap);
-
-    return 0;
 }
 
 bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, int ps, int it, int ms, float mf){
@@ -58,7 +88,7 @@ bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, 
     // Rep 25 times
     for(int n = 0; n < it; n++){
         //Run the training step
-        float bestSolutionFitness = ga.run(cx, ff, ps);
+        float bestSolutionFitness = ga.run(cx, ff, ps, false);
 
         //Add to number of generations and number of fitness function evaluations
         generations += ga.generationCount;
