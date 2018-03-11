@@ -1,8 +1,5 @@
 #include "GeneticAlgorithm.h"
-#include <iostream>
-#include <time.h>
 
-void printResults(int fness, int iter, int cx, int ff, int ps);
 void runExperiments();
 void runMetricCheck();
 void runExperiment(GeneticAlgorithm &ga, CrossoverOperator crossoverOperator, FitnessFunction fitnessFunction);
@@ -11,11 +8,11 @@ bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, 
 int main() {
     std::cout << "Starting Program" << std::endl << std::endl;
 
+    // This is for the basic experiments
+    runExperiments();
+
     // This is for the 3 last plots in the report
     runMetricCheck();
-
-    // This is for the other stuff
-    //runExperiments();
 
     return 0;
 }
@@ -31,11 +28,11 @@ void runMetricCheck()
 
     std::cout << "UX" << std::endl << std::endl;
 
-    float bestSolutionFitness = ga.run(CrossoverOperator::uniformX, ff, populationSize, true);
+    ga.run(CrossoverOperator::uniformX, ff, populationSize, true);
 
     std::cout << "2PX" << std::endl << std::endl;
 
-    bestSolutionFitness = ga.run(CrossoverOperator::twoPointX, ff, populationSize, true);
+    ga.run(CrossoverOperator::twoPointX, ff, populationSize, true);
 
 }
 
@@ -110,8 +107,8 @@ bool doTraining(GeneticAlgorithm &ga, CrossoverOperator cx, FitnessFunction ff, 
         std::cout << "Success! Count: " << count << std::endl;
 
         // If succesful run: set ga metrics
-        ga.averageGenerationCountOfLastSucces = generations/it;
-        ga.averageNumberOfFitFnEvaluations = fFEvals/it;
+        ga.averageGenerationCountOfLastSucces = (float)generations/it;
+        ga.averageNumberOfFitFnEvaluations = (float)fFEvals/it;
         ga.averageRuntimeOfLastSucces = (((float)t)/CLOCKS_PER_SEC)/it;
     }
     else{
@@ -147,11 +144,13 @@ void runExperiment(GeneticAlgorithm &ga, CrossoverOperator crossoverOperator, Fi
     std::cout << "Starting bisection search" << std::endl;
 
     if(populationSize*2 > MAXIMUM_POPULATION_SIZE){std::cout<<std::endl<<"Finished training"<<std::endl;}
-    else{
+    else
+    {
         //Perform bisection search to find minimal value of populationSize
         int upper =  populationSize;        //This value returns true
         int lower = populationSize/2;       //This value returned false
-        do{
+        do
+        {
             int populationSize = (lower+upper)/2;
             res = doTraining(ga, crossoverOperator, fitnessFunction, populationSize, NUM_TRAINING_ITER, MIN_TRAINING_SUCC, maxFitness);
             if(res){
@@ -169,17 +168,8 @@ void runExperiment(GeneticAlgorithm &ga, CrossoverOperator crossoverOperator, Fi
         // log metrics
         std::cout<<"avgGenCount: "<< ga.averageGenerationCountOfLastSucces
                  <<" avgRuntime: "<< ga.averageRuntimeOfLastSucces
-                 <<" avgFFevals: "<< ga.numberOfFitFnEvalualtions
+                 <<" avgFFevals: "<< ga.averageNumberOfFitFnEvaluations
                  <<std::endl      <<std::endl;
 
     }
-}
-
-void printResults(int fitness, int iter, int cx, int ff, int ps){
-    std::cout   <<"fitness;"    <<fitness
-                <<";iteration;" <<iter
-                <<";xOP;"      <<cx
-                <<";fFun;"      <<ff
-                <<";popSize;"   <<ps
-                <<std::endl     <<std::endl;
 }

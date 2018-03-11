@@ -17,10 +17,10 @@ public:
     // VARIABLES
 
     int generationCount;
-    int averageGenerationCountOfLastSucces;
+    float averageGenerationCountOfLastSucces;
     float averageRuntimeOfLastSucces;
     int numberOfFitFnEvalualtions;
-    int averageNumberOfFitFnEvaluations;
+    float averageNumberOfFitFnEvaluations;
 
     // FUNCTIONS
 

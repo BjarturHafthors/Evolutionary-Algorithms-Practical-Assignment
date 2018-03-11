@@ -18,7 +18,6 @@ public:
     Individual();
     void initializeValues();
     bool isCurrentlyInPopulation() const;
-    void setCurrentlyInPopulation(bool currentlyInPopulation);
     int getFitness() const;
     void setFitness(int fitness);
     const std::vector<bool> &getValues() const;

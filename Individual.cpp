@@ -48,11 +48,6 @@ bool Individual::isCurrentlyInPopulation() const
     return currentlyInPopulation;
 }
 
-void Individual::setCurrentlyInPopulation(bool currentlyInPopulation)
-{
-    Individual::currentlyInPopulation = currentlyInPopulation;
-}
-
 int Individual::getFitness() const
 {
     return fitness;

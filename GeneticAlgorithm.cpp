@@ -55,7 +55,10 @@ float GeneticAlgorithm::run(CrossoverOperator co, FitnessFunction ff, int pSize,
     this->populationSize = pSize;
     initializePopulation();
 
-    printMetrics();
+    if (metricRun)
+    {
+        printMetrics();
+    }
 
     // Repeat until children are not used any more
     do
@@ -143,7 +146,7 @@ void GeneticAlgorithm::deletePopulation()
 
 void GeneticAlgorithm::setIndividualFitness(Individual* individual)
 {
-    int fitness = -1;
+    float fitness = -1;
 
     // Pick correct fitness function
     switch(fitnessFunc)

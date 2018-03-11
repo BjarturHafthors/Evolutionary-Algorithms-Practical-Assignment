@@ -1,5 +1,5 @@
 //
-// Created by bjart on 21/02/2018.
+// Created by Bjartur on 21/02/2018.
 //
 
 #ifndef PRACTICAL1_ENUMS_H

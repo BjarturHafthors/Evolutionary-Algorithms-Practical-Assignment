@@ -3,4 +3,4 @@ project(Practical1)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(Practical1 main.cpp GeneticAlgorithm.cpp GeneticAlgorithm.h Individual.cpp Individual.h Enums.cpp Enums.h)
+add_executable(Practical1 main.cpp GeneticAlgorithm.cpp GeneticAlgorithm.h Individual.cpp Individual.h Enums.h)
